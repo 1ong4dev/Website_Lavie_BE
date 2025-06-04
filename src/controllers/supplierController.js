@@ -1,4 +1,6 @@
+import mongoose from 'mongoose';
 import Supplier from '../models/Supplier.js';
+import Purchase from '../models/Purchase.js';
 
 // @desc    Get all suppliers
 // @route   GET /api/suppliers
@@ -88,3 +90,57 @@ export const deleteSupplier = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 }; 
+
+export const paySupplierDebt = async (req, res) => {
+  try {
+    const supplierId = req.params.id;
+    const { amount } = req.body;
+  
+    if (!amount || amount <= 0) {
+      return res.status(400).json({ message: 'Số tiền thanh toán không hợp lệ' });
+    }
+  
+    // Lấy tất cả các đơn hàng còn nợ của nhà cung cấp
+    const purchases = await Purchase.find({
+      supplierId,
+      debtRemaining: { $gt: 0 },
+    }).sort({ purchaseDate: 1 }); // ưu tiên trả nợ đơn hàng cũ hơn
+  
+    if (!purchases.length) {
+      return res.status(404).json({ message: 'Không có công nợ cho nhà cung cấp này' });
+    }
+  
+    let remainingAmount = amount;
+  
+    for (const purchase of purchases) {
+      if (remainingAmount <= 0) break;
+  
+      const debt = purchase.debtRemaining;
+      const pay = Math.min(debt, remainingAmount);
+  
+      purchase.paidAmount += pay;
+      purchase.debtRemaining -= pay;
+  
+      // Cập nhật trạng thái
+      if (purchase.debtRemaining === 0) {
+        purchase.status = 'completed'; // Thanh toán xong
+      } else {
+        purchase.status = 'pending';   // Vẫn còn nợ
+      }
+  
+      await purchase.save();
+  
+      remainingAmount -= pay;
+    }
+  
+    if (remainingAmount > 0) {
+      return res.status(400).json({ message: 'Số tiền thanh toán vượt quá công nợ hiện tại' });
+    }
+  
+    res.json({ message: 'Thanh toán công nợ cho nhà cung cấp thành công' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: error.message });
+  }
+  
+};
