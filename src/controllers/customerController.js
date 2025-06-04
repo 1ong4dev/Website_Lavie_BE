@@ -52,7 +52,7 @@ export const createCustomer = async (req, res) => {
 // @access  Private/Admin/Sales
 export const updateCustomer = async (req, res) => {
   try {
-    const { name, type, phone, address, agency_level, debt, empty_debt } = req.body;
+    const { name, type, phone, address, debt, empty_debt } = req.body;
     const customer = await Customer.findById(req.params.id);
 
     if (customer) {
@@ -60,7 +60,6 @@ export const updateCustomer = async (req, res) => {
       customer.type = type || customer.type;
       customer.phone = phone || customer.phone;
       customer.address = address || customer.address;
-      customer.agency_level = type === 'agency' ? (agency_level || customer.agency_level) : undefined;
       customer.debt = debt !== undefined ? debt : customer.debt;
       customer.empty_debt = empty_debt !== undefined ? empty_debt : customer.empty_debt;
 
