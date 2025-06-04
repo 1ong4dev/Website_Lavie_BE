@@ -33,13 +33,13 @@ export const getCustomerById = async (req, res) => {
 // @access  Private/Admin/Sales
 export const createCustomer = async (req, res) => {
   try {
-    const { name, type, phone, address, agency_level } = req.body;
+    const { name, type, phone, address, userId } = req.body;
     const customer = await Customer.create({
       name,
       type,
       phone,
       address,
-      agency_level: type === 'agency' ? agency_level : undefined,
+      userId,
     });
     res.status(201).json(customer);
   } catch (error) {

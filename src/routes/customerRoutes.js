@@ -12,7 +12,7 @@ const router = express.Router();
 
 router.route('/')
   .get(protect, getCustomers)
-  .post(protect, sales, createCustomer);
+  .post(protect, createCustomer);
 
 router.route('/:id')
   .get(protect, getCustomerById)

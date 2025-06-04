@@ -12,18 +12,9 @@ const customerSchema = new mongoose.Schema({
   },
   phone: {
     type: String,
-    required: true,
   },
   address: {
     type: String,
-    required: true,
-  },
-  // bỏ
-  agency_level: {
-    type: Number,
-    required: function() {
-      return this.type === 'agency';
-    },
   },
   debt: {
     type: Number,
@@ -32,6 +23,11 @@ const customerSchema = new mongoose.Schema({
   empty_debt: {
     type: Number,
     default: 0,
+  },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: false,
   },
 }, {
   timestamps: true,
