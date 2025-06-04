@@ -2,16 +2,32 @@ import Purchase from '../models/Purchase.js';
 import Supplier from '../models/Supplier.js';
 import Product from '../models/Product.js';
 import PurchaseItem from '../models/PurchaseItem.js';
+import mongoose from 'mongoose';
+
 
 // @desc    Get all purchases
 // @route   GET /api/purchases
 // @access  Private
+
+
+//get purchases Long fix
 export const getPurchases = async (req, res) => {
   try {
-    const purchases = await Purchase.find({}).sort({ purchaseDate: -1 });
+    const { supplierId } = req.query;
+
+    let filter = {};
+    if (supplierId && mongoose.Types.ObjectId.isValid(supplierId)) {
+      filter.supplierId = supplierId;
+    }
+
+    const purchases = await Purchase.find(filter)
+      .populate("supplierId")
+      .sort({ purchaseDate: -1 });
+
     res.json(purchases);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error("Error loading purchases:", error);
+    res.status(500).json({ message: "Không thể tải lịch sử nhập hàng" });
   }
 };
 

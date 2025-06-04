@@ -5,6 +5,7 @@ import {
   createSupplier,
   updateSupplier,
   deleteSupplier,
+  paySupplierDebt,
 } from '../controllers/supplierController.js';
 import { protect, admin } from '../middleware/auth.js';
 
@@ -18,5 +19,9 @@ router.route('/:id')
   .get(protect, getSupplierById)
   .put(protect, admin, updateSupplier)
   .delete(protect, admin, deleteSupplier);
+  
+
+  router.route('/:id/pay')
+  .put(protect, admin, paySupplierDebt);
 
 export default router; 
