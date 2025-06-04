@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Báo Cáo Công Nợ Nhà Cung Cấp</title>
+  <style>
+    @font-face {
+      font-family: 'Roboto';
+      src: url('{{fontPath}}/Roboto-Regular.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'Roboto';
+      src: url('{{fontPath}}/Roboto-Bold.ttf') format('truetype');
+      font-weight: bold;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'Roboto';
+      src: url('{{fontPath}}/Roboto-Light.ttf') format('truetype');
+      font-weight: 300;
+      font-style: normal;
+    }
+    
+    body {
+      font-family: 'Roboto', sans-serif;
+      padding: 20px;
+      color: #333;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .company-name {
+      color: #2F5597;
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    
+    .company-details {
+      color: #666;
+      font-size: 10px;
+      font-weight: 300;
+    }
+    
+    .report-title {
+      color: #2F5597;
+      font-size: 18px;
+      font-weight: bold;
+      margin: 20px 0;
+    }
+    
+    .report-period {
+      font-size: 11px;
+      margin-bottom: 20px;
+    }
+    
+    .summary-boxes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    
+    .summary-box {
+      padding: 15px;
+      border-radius: 5px;
+      width: 250px;
+      color: white;
+    }
+    
+    .summary-box.primary {
+      background-color: #2F5597;
+    }
+    
+    .summary-box.success {
+      background-color: #1F8756;
+    }
+    
+    .summary-box.warning {
+      background-color: #C45911;
+    }
+    
+    .summary-title {
+      font-size: 10px;
+      font-weight: 300;
+      margin-bottom: 10px;
+    }
+    
+    .summary-value {
+      font-size: 16px;
+      font-weight: bold;
+    }
+    
+    .section-title {
+      color: #2F5597;
+      font-size: 12px;
+      font-weight: bold;
+      margin: 20px 0 10px 0;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    
+    table thead {
+      background-color: #2F5597;
+      color: white;
+    }
+    
+    table th, table td {
+      padding: 8px;
+      text-align: left;
+      font-size: 10px;
+    }
+    
+    table tr:nth-child(even) {
+      background-color: #f5f5f5;
+    }
+    
+    .total {
+      text-align: right;
+      font-weight: bold;
+      margin-top: 10px;
+      font-size: 11px;
+    }
+    
+    .footer {
+      text-align: center;
+      margin-top: 50px;
+      font-size: 10px;
+      color: #666;
+    }
+    
+    .page-number {
+      text-align: center;
+      font-size: 8px;
+      color: #999;
+      position: absolute;
+      bottom: 10px;
+      width: 100%;
+      left: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="company-name">W_LAVIE</div>
+    <div class="company-details">CÔNG TY TNHH THƯƠNG MẠI W_LAVIE</div>
+    <div class="company-details">123 Đường ABC, Phường XYZ, Quận 123, TP.HCM</div>
+    <div class="company-details">Điện thoại: 0123.456.789 - Email: contact@wlavie.com</div>
+  </div>
+  
+  <div class="report-title">BÁO CÁO CÔNG NỢ NHÀ CUNG CẤP</div>
+  <div class="report-period">
+    Kỳ báo cáo: {{dateRange.start}} - {{dateRange.end}}<br>
+    Ngày lập: {{currentDate}}
+  </div>
+  
+  <div class="summary-boxes">
+    <div class="summary-box primary">
+      <div class="summary-title">TỔNG CÔNG NỢ</div>
+      <div class="summary-value">{{formatCurrency report.totalDebt}} đ</div>
+    </div>
+    <div class="summary-box success">
+      <div class="summary-title">NHÀ CUNG CẤP CÓ CÔNG NỢ</div>
+      <div class="summary-value">{{report.totalSuppliers}}</div>
+    </div>
+    <div class="summary-box warning">
+      <div class="summary-title">GIAO DỊCH CHƯA THANH TOÁN</div>
+      <div class="summary-value">{{report.pendingPayments}}</div>
+    </div>
+  </div>
+  
+  <div class="section-title">CHI TIẾT CÔNG NỢ THEO NHÀ CUNG CẤP</div>
+  <table>
+    <thead>
+      <tr>
+        <th>STT</th>
+        <th>Nhà cung cấp</th>
+        <th>Số điện thoại</th>
+        <th>Công nợ</th>
+        <th>Giao dịch chưa TT</th>
+        <th>Mua hàng gần nhất</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each report.supplierDebts}}
+      <tr>
+        <td>{{addOne @index}}</td>
+        <td>{{this.supplierName}}</td>
+        <td>{{this.supplierPhone}}</td>
+        <td>{{formatCurrency this.totalDebt}} đ</td>
+        <td>{{this.pendingPayments}}</td>
+        <td>{{formatDate this.lastPurchaseDate}}</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+  
+  <div class="total">Tổng công nợ: {{formatCurrency report.totalDebt}} đ</div>
+  
+  <div class="footer">
+    © {{currentYear}} W_LAVIE. Báo cáo được tạo tự động từ hệ thống.
+  </div>
+  
+  <div class="page-number">
+    Trang {{pageNumber}}
+  </div>
+</body>
+</html>

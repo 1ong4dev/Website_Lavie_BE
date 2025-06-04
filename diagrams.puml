@@ -1,0 +1,151 @@
+@startuml ERD
+
+' Entity-Relationship Diagram
+!define table(x) class x << (T,#FFAAAA) >>
+!define primary_key(x) <b>x</b>
+hide methods
+hide stereotypes
+
+' User Entity
+table(User) {
+  primary_key(_id): ObjectId
+  username: String
+  passwordHash: String
+  name: String
+  role: enum[admin, sales, delivery]
+  createdAt: Date
+  updatedAt: Date
+}
+
+' Product Entity
+table(Product) {
+  primary_key(_id): ObjectId
+  name: String
+  unit: String
+  price: Number
+  is_returnable: Boolean
+  stock: Number
+  image: String
+  description: String
+  createdAt: Date
+  updatedAt: Date
+}
+
+' Order Entity
+table(Order) {
+  primary_key(_id): ObjectId
+  customerId: ObjectId
+  customerName: String
+  orderDate: Date
+  status: enum[completed, pending, canceled]
+  totalAmount: Number
+  paidAmount: Number
+  debtRemaining: Number
+  returnableOut: Number
+  returnableIn: Number
+  createdBy: ObjectId
+  createdAt: Date
+  updatedAt: Date
+}
+
+' Customer Entity
+table(Customer) {
+  primary_key(_id): ObjectId
+  name: String
+  phone: String
+  address: String
+  createdAt: Date
+  updatedAt: Date
+}
+
+' OrderItem Entity
+table(OrderItem) {
+  primary_key(_id): ObjectId
+  orderId: ObjectId
+  productId: ObjectId
+  quantity: Number
+  price: Number
+  amount: Number
+  createdAt: Date
+  updatedAt: Date
+}
+
+' Relationships
+Order "1" -- "*" OrderItem
+Order "*" -- "1" Customer
+Order "*" -- "1" User
+OrderItem "*" -- "1" Product
+
+@enduml
+
+@startuml ClassDiagram
+
+' Class Diagram
+class User {
+  -_id: ObjectId
+  -username: String
+  -passwordHash: String
+  -name: String
+  -role: String
+  -createdAt: Date
+  -updatedAt: Date
+  +matchPassword(enteredPassword: String): Boolean
+}
+
+class Product {
+  -_id: ObjectId
+  -name: String
+  -unit: String
+  -price: Number
+  -is_returnable: Boolean
+  -stock: Number
+  -image: String
+  -description: String
+  -createdAt: Date
+  -updatedAt: Date
+}
+
+class Order {
+  -_id: ObjectId
+  -customerId: ObjectId
+  -customerName: String
+  -orderDate: Date
+  -status: String
+  -totalAmount: Number
+  -paidAmount: Number
+  -debtRemaining: Number
+  -returnableOut: Number
+  -returnableIn: Number
+  -createdBy: ObjectId
+  -createdAt: Date
+  -updatedAt: Date
+  +calculateDebtRemaining(): void
+}
+
+class Customer {
+  -_id: ObjectId
+  -name: String
+  -phone: String
+  -address: String
+  -createdAt: Date
+  -updatedAt: Date
+}
+
+class OrderItem {
+  -_id: ObjectId
+  -orderId: ObjectId
+  -productId: ObjectId
+  -quantity: Number
+  -price: Number
+  -amount: Number
+  -createdAt: Date
+  -updatedAt: Date
+}
+
+' Relationships with cardinality
+Order "1" *-- "*" OrderItem
+Order "*" --> "1" Customer
+Order "*" --> "1" User
+OrderItem "*" --> "1" Product
+
+@enduml

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Báo Cáo Tồn Kho</title>
+  <style>
+    @font-face {
+      font-family: 'Roboto';
+      src: url('{{fontPath}}/Roboto-Regular.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'Roboto';
+      src: url('{{fontPath}}/Roboto-Bold.ttf') format('truetype');
+      font-weight: bold;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'Roboto';
+      src: url('{{fontPath}}/Roboto-Light.ttf') format('truetype');
+      font-weight: 300;
+      font-style: normal;
+    }
+    
+    body {
+      font-family: 'Roboto', sans-serif;
+      padding: 20px;
+      color: #333;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .company-name {
+      color: #2F5597;
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    
+    .company-details {
+      color: #666;
+      font-size: 10px;
+      font-weight: 300;
+    }
+    
+    .report-title {
+      color: #2F5597;
+      font-size: 18px;
+      font-weight: bold;
+      margin: 20px 0;
+    }
+    
+    .report-period {
+      font-size: 11px;
+      margin-bottom: 20px;
+    }
+    
+    .summary-boxes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    
+    .summary-box {
+      padding: 15px;
+      border-radius: 5px;
+      width: 180px;
+      color: white;
+    }
+    
+    .summary-box.primary {
+      background-color: #2F5597;
+    }
+    
+    .summary-box.success {
+      background-color: #1F8756;
+    }
+    
+    .summary-box.warning {
+      background-color: #C45911;
+    }
+    
+    .summary-box.danger {
+      background-color: #C00000;
+    }
+    
+    .summary-box.info {
+      background-color: #2F5597;
+    }
+    
+    .summary-title {
+      font-size: 10px;
+      font-weight: 300;
+      margin-bottom: 10px;
+    }
+    
+    .summary-value {
+      font-size: 16px;
+      font-weight: bold;
+    }
+    
+    .section-title {
+      color: #2F5597;
+      font-size: 12px;
+      font-weight: bold;
+      margin: 20px 0 10px 0;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    
+    table thead {
+      background-color: #2F5597;
+      color: white;
+    }
+    
+    table th, table td {
+      padding: 8px;
+      text-align: left;
+      font-size: 10px;
+    }
+    
+    table tr:nth-child(even) {
+      background-color: #f5f5f5;
+    }
+    
+    .footer {
+      text-align: center;
+      margin-top: 50px;
+      font-size: 10px;
+      color: #666;
+    }
+    
+    .page-number {
+      text-align: center;
+      font-size: 8px;
+      color: #999;
+      position: absolute;
+      bottom: 10px;
+      width: 100%;
+      left: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="company-name">W_LAVIE</div>
+    <div class="company-details">CÔNG TY TNHH THƯƠNG MẠI W_LAVIE</div>
+    <div class="company-details">123 Đường ABC, Phường XYZ, Quận 123, TP.HCM</div>
+    <div class="company-details">Điện thoại: 0123.456.789 - Email: contact@wlavie.com</div>
+  </div>
+  
+  <div class="report-title">BÁO CÁO TỒN KHO</div>
+  <div class="report-period">
+    Ngày lập: {{currentDate}}
+  </div>
+  
+  <div class="summary-boxes">
+    <div class="summary-box primary">
+      <div class="summary-title">TỔNG SẢN PHẨM</div>
+      <div class="summary-value">{{report.summary.totalProducts}}</div>
+    </div>
+    <div class="summary-box success">
+      <div class="summary-title">GIÁ TRỊ TỒN KHO</div>
+      <div class="summary-value">{{formatCurrency report.summary.totalInventoryValue}} đ</div>
+    </div>
+    <div class="summary-box warning">
+      <div class="summary-title">SẮP HẾT HÀNG</div>
+      <div class="summary-value">{{report.summary.lowStockCount}}</div>
+    </div>
+    <div class="summary-box danger">
+      <div class="summary-title">ĐÃ HẾT HÀNG</div>
+      <div class="summary-value">{{report.summary.outOfStockCount}}</div>
+    </div>
+    <div class="summary-box info">
+      <div class="summary-title">CHỜ TRẢ HÀNG</div>
+      <div class="summary-value">{{report.summary.returnablePending}}</div>
+    </div>
+  </div>
+  
+  <div class="section-title">SẢN PHẨM SẮP HẾT HÀNG</div>
+  <table>
+    <thead>
+      <tr>
+        <th>STT</th>
+        <th>Mã SP</th>
+        <th>Tên sản phẩm</th>
+        <th>Tồn kho</th>
+        <th>Mức cảnh báo</th>
+        <th>Đơn giá</th>
+        <th>Giá trị</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each report.lowStockProducts}}
+      <tr>
+        <td>{{addOne @index}}</td>
+        <td>{{this.productId}}</td>
+        <td>{{this.productName}}</td>
+        <td>{{this.inStock}}</td>
+        <td>{{this.reorderLevel}}</td>
+        <td>{{formatCurrency this.price}} đ</td>
+        <td>{{formatCurrency (multiply this.inStock this.price)}} đ</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+  
+  <div class="section-title">SẢN PHẨM ĐÃ HẾT HÀNG</div>
+  <table>
+    <thead>
+      <tr>
+        <th>STT</th>
+        <th>Mã SP</th>
+        <th>Tên sản phẩm</th>
+        <th>Mức cảnh báo</th>
+        <th>Đơn giá</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each report.outOfStockProducts}}
+      <tr>
+        <td>{{addOne @index}}</td>
+        <td>{{this.productId}}</td>
+        <td>{{this.productName}}</td>
+        <td>{{this.reorderLevel}}</td>
+        <td>{{formatCurrency this.price}} đ</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+  
+  <div class="section-title">SẢN PHẨM TỒN KHO NHIỀU NHẤT</div>
+  <table>
+    <thead>
+      <tr>
+        <th>STT</th>
+        <th>Mã SP</th>
+        <th>Tên sản phẩm</th>
+        <th>Tồn kho</th>
+        <th>Mức cảnh báo</th>
+        <th>Đơn giá</th>
+        <th>Giá trị</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each report.mostStockedProducts}}
+      <tr>
+        <td>{{addOne @index}}</td>
+        <td>{{this.productId}}</td>
+        <td>{{this.productName}}</td>
+        <td>{{this.inStock}}</td>
+        <td>{{this.reorderLevel}}</td>
+        <td>{{formatCurrency this.price}} đ</td>
+        <td>{{formatCurrency (multiply this.inStock this.price)}} đ</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+  
+  <div class="footer">
+    © {{currentYear}} W_LAVIE. Báo cáo được tạo tự động từ hệ thống.
+  </div>
+  
+  <div class="page-number">
+    Trang {{pageNumber}}
+  </div>
+</body>
+</html>

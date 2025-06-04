@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Hóa Đơn</title>
+  <style>
+    @font-face {
+      font-family: 'Roboto';
+      src: url('{{fontPath}}/Roboto-Regular.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'Roboto';
+      src: url('{{fontPath}}/Roboto-Bold.ttf') format('truetype');
+      font-weight: bold;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'Roboto';
+      src: url('{{fontPath}}/Roboto-Light.ttf') format('truetype');
+      font-weight: 300;
+      font-style: normal;
+    }
+    
+    body {
+      font-family: 'Roboto', sans-serif;
+      padding: 20px;
+      color: #333;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .company-name {
+      color: #2F5597;
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    
+    .company-details {
+      color: #666;
+      font-size: 10px;
+      font-weight: 300;
+    }
+    
+    .invoice-title {
+      color: #2F5597;
+      font-size: 18px;
+      font-weight: bold;
+      margin: 20px 0;
+    }
+    
+    .invoice-info {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 30px;
+    }
+    
+    .info-section {
+      width: 48%;
+    }
+    
+    .info-title {
+      font-weight: bold;
+      font-size: 12px;
+      color: #2F5597;
+      margin-bottom: 5px;
+    }
+    
+    .info-content {
+      font-size: 11px;
+      margin-bottom: 15px;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    
+    table thead {
+      background-color: #2F5597;
+      color: white;
+    }
+    
+    table th, table td {
+      padding: 8px;
+      text-align: left;
+      font-size: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+    
+    table tr:nth-child(even) {
+      background-color: #f5f5f5;
+    }
+    
+    .totals {
+      margin-top: 20px;
+      text-align: right;
+    }
+    
+    .total-line {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 5px;
+    }
+    
+    .total-label {
+      font-size: 11px;
+      width: 150px;
+      text-align: right;
+      margin-right: 10px;
+    }
+    
+    .total-value {
+      font-size: 11px;
+      width: 100px;
+      text-align: right;
+      font-weight: bold;
+    }
+    
+    .grand-total {
+      font-weight: bold;
+      font-size: 14px;
+      color: #2F5597;
+      margin-top: 10px;
+    }
+    
+    .signatures {
+      margin-top: 50px;
+      display: flex;
+      justify-content: space-between;
+    }
+    
+    .signature-section {
+      text-align: center;
+      width: 200px;
+    }
+    
+    .signature-title {
+      font-weight: bold;
+      font-size: 11px;
+      margin-bottom: 40px;
+    }
+    
+    .signature-name {
+      font-size: 10px;
+    }
+    
+    .footer {
+      text-align: center;
+      margin-top: 50px;
+      font-size: 10px;
+      color: #666;
+    }
+    
+    .page-number {
+      text-align: center;
+      font-size: 8px;
+      color: #999;
+      position: absolute;
+      bottom: 10px;
+      width: 100%;
+      left: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="company-name">W_LAVIE</div>
+    <div class="company-details">CÔNG TY TNHH THƯƠNG MẠI W_LAVIE</div>
+    <div class="company-details">123 Đường ABC, Phường XYZ, Quận 123, TP.HCM</div>
+    <div class="company-details">Điện thoại: 0123.456.789 - Email: contact@wlavie.com</div>
+  </div>
+  
+  <div class="invoice-title">HÓA ĐƠN BÁN HÀNG</div>
+  
+  <div class="invoice-info">
+    <div class="info-section">
+      <div class="info-title">THÔNG TIN ĐƠN HÀNG</div>
+      <div class="info-content">
+        <p>Mã đơn hàng: {{order._id}}</p>
+        <p>Ngày đặt hàng: {{formatDateTime order.orderDate}}</p>
+        <p>Trạng thái: {{translateStatus order.status}}</p>
+      </div>
+    </div>
+    
+    <div class="info-section">
+      <div class="info-title">THÔNG TIN KHÁCH HÀNG</div>
+      <div class="info-content">
+        <p>Khách hàng: {{order.customerName}}</p>
+        <p>Điện thoại: {{order.customerPhone}}</p>
+        <p>Địa chỉ: {{order.shippingAddress}}</p>
+      </div>
+    </div>
+  </div>
+  
+  <table>
+    <thead>
+      <tr>
+        <th>STT</th>
+        <th>Sản phẩm</th>
+        <th>Đơn vị</th>
+        <th>Số lượng</th>
+        <th>Đơn giá</th>
+        <th>Thành tiền</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each order.items}}
+      <tr>
+        <td>{{addOne @index}}</td>
+        <td>{{this.productName}}</td>
+        <td>{{this.unit}}</td>
+        <td>{{this.quantity}}</td>
+        <td>{{formatCurrency this.price}} đ</td>
+        <td>{{formatCurrency this.subTotal}} đ</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+  
+  <div class="totals">
+    <div class="total-line">
+      <div class="total-label">Tổng tiền hàng:</div>
+      <div class="total-value">{{formatCurrency order.totalAmount}} đ</div>
+    </div>
+    {{#if order.discountAmount}}
+    <div class="total-line">
+      <div class="total-label">Chiết khấu:</div>
+      <div class="total-value">{{formatCurrency order.discountAmount}} đ</div>
+    </div>
+    {{/if}}
+    <div class="total-line">
+      <div class="total-label">Đã thanh toán:</div>
+      <div class="total-value">{{formatCurrency order.paidAmount}} đ</div>
+    </div>
+    <div class="total-line">
+      <div class="total-label">Công nợ:</div>
+      <div class="total-value">{{formatCurrency order.debtRemaining}} đ</div>
+    </div>
+    <div class="total-line grand-total">
+      <div class="total-label">Tổng cộng:</div>
+      <div class="total-value">{{formatCurrency order.totalAmount}} đ</div>
+    </div>
+  </div>
+  
+  <div class="signatures">
+    <div class="signature-section">
+      <div class="signature-title">NGƯỜI MUA HÀNG</div>
+      <div class="signature-name">(Ký, ghi rõ họ tên)</div>
+    </div>
+    
+    <div class="signature-section">
+      <div class="signature-title">NGƯỜI BÁN HÀNG</div>
+      <div class="signature-name">(Ký, ghi rõ họ tên)</div>
+    </div>
+  </div>
+  
+  <div class="footer">
+    © {{currentYear}} W_LAVIE. Cảm ơn quý khách đã sử dụng dịch vụ của chúng tôi.
+  </div>
+  
+  <div class="page-number">
+    Trang {{pageNumber}}
+  </div>
+</body>
+</html>

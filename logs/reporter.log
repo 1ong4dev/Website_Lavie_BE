@@ -1,0 +1,152 @@
+2025-05-20T18:09:46.438Z - info: Initializing jsreport (version: 4.9.0, configuration file: none, nodejs: 20.18.0)
+2025-05-20T18:09:46.441Z - info: Searching for available extensions in C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\
+2025-05-20T18:09:46.446Z - info: Extensions location cache not found, crawling directories
+2025-05-20T18:09:53.214Z - info: Found 35 extension(s)
+2025-05-20T18:09:53.247Z - debug: Writing extension locations cache to C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\temp\core\locations.json
+2025-05-20T18:09:53.249Z - debug: Discovered 35 extensions
+2025-05-20T18:09:53.290Z - error: Error occurred during reporter init: Error: Error when loading extension handlebars@2.1.0
+Error: Extension "handlebars" is not compatible with "core" extension. Missing ".requires" information in "handlebars" definition
+    at validateMinimalVersion (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\validateMinimalVersion.js:24:11)
+    at Object._useOne (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\extensionsManager.js:158:9)
+    at Object._useMany (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\extensionsManager.js:99:38)
+    at Object.init (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\extensionsManager.js:74:19)
+    at MainReporter.init (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\reporter.js:207:36)
+    at async initializeJsReport (file:///C:/Users/lam08/Desktop/W_lavie/W_Lavie_BE/src/config/jsreport.js:43:5)
+    at Object._useOne (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\extensionsManager.js:248:15)
+    at Object._useMany (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\extensionsManager.js:99:38)
+    at Object.init (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\extensionsManager.js:74:19)
+    at MainReporter.init (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\reporter.js:207:36)
+    at async initializeJsReport (file:///C:/Users/lam08/Desktop/W_lavie/W_Lavie_BE/src/config/jsreport.js:43:5)
+2025-05-20T18:09:54.737Z - info: Initializing jsreport (version: 4.9.0, configuration file: none, nodejs: 20.18.0)
+2025-05-20T18:09:54.740Z - info: Searching for available extensions in C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\
+2025-05-20T18:09:54.749Z - info: Extensions location cache contains up to date information, skipping crawling in C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\
+2025-05-20T18:09:54.759Z - info: Found 35 extension(s)
+2025-05-20T18:09:54.838Z - debug: Writing extension locations cache to C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\temp\core\locations.json
+2025-05-20T18:09:54.840Z - debug: Discovered 35 extensions
+2025-05-20T18:09:54.884Z - error: Error occurred during reporter init: Error: Error when loading extension handlebars@2.1.0
+Error: Extension "handlebars" is not compatible with "core" extension. Missing ".requires" information in "handlebars" definition
+    at validateMinimalVersion (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\validateMinimalVersion.js:24:11)
+    at Object._useOne (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\extensionsManager.js:158:9)
+    at Object._useMany (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\extensionsManager.js:99:38)
+    at Object.init (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\extensionsManager.js:74:19)
+    at MainReporter.init (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\reporter.js:207:36)
+    at async initializeJsReport (file:///C:/Users/lam08/Desktop/W_lavie/W_Lavie_BE/src/config/jsreport.js:43:5)
+    at Object._useOne (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\extensionsManager.js:248:15)
+    at Object._useMany (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\extensionsManager.js:99:38)
+    at Object.init (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\extensionsManager.js:74:19)
+    at MainReporter.init (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\reporter.js:207:36)
+    at async initializeJsReport (file:///C:/Users/lam08/Desktop/W_lavie/W_Lavie_BE/src/config/jsreport.js:43:5)
+2025-05-20T18:09:56.295Z - info: Initializing jsreport (version: 4.9.0, configuration file: none, nodejs: 20.18.0)
+2025-05-20T18:09:56.298Z - info: Searching for available extensions in C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\
+2025-05-20T18:09:56.306Z - info: Extensions location cache contains up to date information, skipping crawling in C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\
+2025-05-20T18:09:56.316Z - info: Found 35 extension(s)
+2025-05-20T18:09:56.395Z - debug: Writing extension locations cache to C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\temp\core\locations.json
+2025-05-20T18:09:56.397Z - debug: Discovered 35 extensions
+2025-05-20T18:09:56.435Z - error: Error occurred during reporter init: Error: Error when loading extension handlebars@2.1.0
+Error: Extension "handlebars" is not compatible with "core" extension. Missing ".requires" information in "handlebars" definition
+    at validateMinimalVersion (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\validateMinimalVersion.js:24:11)
+    at Object._useOne (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\extensionsManager.js:158:9)
+    at Object._useMany (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\extensionsManager.js:99:38)
+    at Object.init (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\extensionsManager.js:74:19)
+    at MainReporter.init (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\reporter.js:207:36)
+    at async initializeJsReport (file:///C:/Users/lam08/Desktop/W_lavie/W_Lavie_BE/src/config/jsreport.js:43:5)
+    at Object._useOne (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\extensionsManager.js:248:15)
+    at Object._useMany (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\extensionsManager.js:99:38)
+    at Object.init (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\extensionsManager.js:74:19)
+    at MainReporter.init (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\reporter.js:207:36)
+    at async initializeJsReport (file:///C:/Users/lam08/Desktop/W_lavie/W_Lavie_BE/src/config/jsreport.js:43:5)
+2025-05-20T18:09:57.827Z - info: Initializing jsreport (version: 4.9.0, configuration file: none, nodejs: 20.18.0)
+2025-05-20T18:09:57.830Z - info: Searching for available extensions in C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\
+2025-05-20T18:09:57.839Z - info: Extensions location cache contains up to date information, skipping crawling in C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\
+2025-05-20T18:09:57.848Z - info: Found 35 extension(s)
+2025-05-20T18:09:57.927Z - debug: Writing extension locations cache to C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\temp\core\locations.json
+2025-05-20T18:09:57.928Z - debug: Discovered 35 extensions
+2025-05-20T18:09:57.965Z - error: Error occurred during reporter init: Error: Error when loading extension handlebars@2.1.0
+Error: Extension "handlebars" is not compatible with "core" extension. Missing ".requires" information in "handlebars" definition
+    at validateMinimalVersion (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\validateMinimalVersion.js:24:11)
+    at Object._useOne (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\extensionsManager.js:158:9)
+    at Object._useMany (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\extensionsManager.js:99:38)
+    at Object.init (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\extensionsManager.js:74:19)
+    at MainReporter.init (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\reporter.js:207:36)
+    at async initializeJsReport (file:///C:/Users/lam08/Desktop/W_lavie/W_Lavie_BE/src/config/jsreport.js:43:5)
+    at Object._useOne (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\extensionsManager.js:248:15)
+    at Object._useMany (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\extensionsManager.js:99:38)
+    at Object.init (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\extensionsManager.js:74:19)
+    at MainReporter.init (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\reporter.js:207:36)
+    at async initializeJsReport (file:///C:/Users/lam08/Desktop/W_lavie/W_Lavie_BE/src/config/jsreport.js:43:5)
+2025-05-20T18:09:59.366Z - info: Initializing jsreport (version: 4.9.0, configuration file: none, nodejs: 20.18.0)
+2025-05-20T18:09:59.369Z - info: Searching for available extensions in C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\
+2025-05-20T18:09:59.376Z - info: Extensions location cache contains up to date information, skipping crawling in C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\
+2025-05-20T18:09:59.386Z - info: Found 35 extension(s)
+2025-05-20T18:09:59.465Z - debug: Writing extension locations cache to C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\temp\core\locations.json
+2025-05-20T18:09:59.467Z - debug: Discovered 35 extensions
+2025-05-20T18:09:59.504Z - error: Error occurred during reporter init: Error: Error when loading extension handlebars@2.1.0
+Error: Extension "handlebars" is not compatible with "core" extension. Missing ".requires" information in "handlebars" definition
+    at validateMinimalVersion (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\validateMinimalVersion.js:24:11)
+    at Object._useOne (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\extensionsManager.js:158:9)
+    at Object._useMany (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\extensionsManager.js:99:38)
+    at Object.init (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\extensionsManager.js:74:19)
+    at MainReporter.init (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\reporter.js:207:36)
+    at async initializeJsReport (file:///C:/Users/lam08/Desktop/W_lavie/W_Lavie_BE/src/config/jsreport.js:43:5)
+    at Object._useOne (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\extensionsManager.js:248:15)
+    at Object._useMany (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\extensionsManager.js:99:38)
+    at Object.init (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\extensionsManager.js:74:19)
+    at MainReporter.init (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\reporter.js:207:36)
+    at async initializeJsReport (file:///C:/Users/lam08/Desktop/W_lavie/W_Lavie_BE/src/config/jsreport.js:43:5)
+2025-05-20T18:10:00.904Z - info: Initializing jsreport (version: 4.9.0, configuration file: none, nodejs: 20.18.0)
+2025-05-20T18:10:00.907Z - info: Searching for available extensions in C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\
+2025-05-20T18:10:00.916Z - info: Extensions location cache contains up to date information, skipping crawling in C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\
+2025-05-20T18:10:00.929Z - info: Found 35 extension(s)
+2025-05-20T18:10:01.007Z - debug: Writing extension locations cache to C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\temp\core\locations.json
+2025-05-20T18:10:01.009Z - debug: Discovered 35 extensions
+2025-05-20T18:10:01.051Z - error: Error occurred during reporter init: Error: Error when loading extension handlebars@2.1.0
+Error: Extension "handlebars" is not compatible with "core" extension. Missing ".requires" information in "handlebars" definition
+    at validateMinimalVersion (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\validateMinimalVersion.js:24:11)
+    at Object._useOne (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\extensionsManager.js:158:9)
+    at Object._useMany (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\extensionsManager.js:99:38)
+    at Object.init (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\extensionsManager.js:74:19)
+    at MainReporter.init (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\reporter.js:207:36)
+    at async initializeJsReport (file:///C:/Users/lam08/Desktop/W_lavie/W_Lavie_BE/src/config/jsreport.js:43:5)
+    at Object._useOne (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\extensionsManager.js:248:15)
+    at Object._useMany (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\extensionsManager.js:99:38)
+    at Object.init (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\extensionsManager.js:74:19)
+    at MainReporter.init (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\reporter.js:207:36)
+    at async initializeJsReport (file:///C:/Users/lam08/Desktop/W_lavie/W_Lavie_BE/src/config/jsreport.js:43:5)
+2025-05-20T18:10:02.476Z - info: Initializing jsreport (version: 4.9.0, configuration file: none, nodejs: 20.18.0)
+2025-05-20T18:10:02.479Z - info: Searching for available extensions in C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\
+2025-05-20T18:10:02.489Z - info: Extensions location cache contains up to date information, skipping crawling in C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\
+2025-05-20T18:10:02.499Z - info: Found 35 extension(s)
+2025-05-20T18:10:02.595Z - debug: Writing extension locations cache to C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\temp\core\locations.json
+2025-05-20T18:10:02.597Z - debug: Discovered 35 extensions
+2025-05-20T18:10:02.637Z - error: Error occurred during reporter init: Error: Error when loading extension handlebars@2.1.0
+Error: Extension "handlebars" is not compatible with "core" extension. Missing ".requires" information in "handlebars" definition
+    at validateMinimalVersion (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\validateMinimalVersion.js:24:11)
+    at Object._useOne (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\extensionsManager.js:158:9)
+    at Object._useMany (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\extensionsManager.js:99:38)
+    at Object.init (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\extensionsManager.js:74:19)
+    at MainReporter.init (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\reporter.js:207:36)
+    at async initializeJsReport (file:///C:/Users/lam08/Desktop/W_lavie/W_Lavie_BE/src/config/jsreport.js:43:5)
+    at Object._useOne (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\extensionsManager.js:248:15)
+    at Object._useMany (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\extensionsManager.js:99:38)
+    at Object.init (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\extensionsManager.js:74:19)
+    at MainReporter.init (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\reporter.js:207:36)
+    at async initializeJsReport (file:///C:/Users/lam08/Desktop/W_lavie/W_Lavie_BE/src/config/jsreport.js:43:5)
+2025-05-20T18:10:04.048Z - info: Initializing jsreport (version: 4.9.0, configuration file: none, nodejs: 20.18.0)
+2025-05-20T18:10:04.051Z - info: Searching for available extensions in C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\
+2025-05-20T18:10:04.060Z - info: Extensions location cache contains up to date information, skipping crawling in C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\
+2025-05-20T18:10:04.072Z - info: Found 35 extension(s)
+2025-05-20T18:10:04.151Z - debug: Writing extension locations cache to C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\temp\core\locations.json
+2025-05-20T18:10:04.153Z - debug: Discovered 35 extensions
+2025-05-20T18:10:04.192Z - error: Error occurred during reporter init: Error: Error when loading extension handlebars@2.1.0
+Error: Extension "handlebars" is not compatible with "core" extension. Missing ".requires" information in "handlebars" definition
+    at validateMinimalVersion (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\validateMinimalVersion.js:24:11)
+    at Object._useOne (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\extensionsManager.js:158:9)
+    at Object._useMany (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\extensionsManager.js:99:38)
+    at Object.init (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\extensionsManager.js:74:19)
+    at MainReporter.init (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\reporter.js:207:36)
+    at async initializeJsReport (file:///C:/Users/lam08/Desktop/W_lavie/W_Lavie_BE/src/config/jsreport.js:43:5)
+    at Object._useOne (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\extensionsManager.js:248:15)
+    at Object._useMany (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\extensionsManager.js:99:38)
+    at Object.init (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\extensions\extensionsManager.js:74:19)
+    at MainReporter.init (C:\Users\lam08\Desktop\W_lavie\W_Lavie_BE\node_modules\@jsreport\jsreport-core\lib\main\reporter.js:207:36)
+    at async initializeJsReport (file:///C:/Users/lam08/Desktop/W_lavie/W_Lavie_BE/src/config/jsreport.js:43:5)
