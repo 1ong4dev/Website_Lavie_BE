@@ -58,11 +58,14 @@ export const createOrder = async (req, res) => {
     }
 
     let customerId, orderItems, customerName;
+    // Tìm customer theo userId
+    let customer;
 
     // Nếu là khách hàng đăng nhập (user role customer)
     if (req.user && req.user.role === 'customer') {
-      customerId = req.user._id;
-      customerName = req.user.name;
+      customer = await Customer.findOne({ userId: req.user._id });
+      customerId = customer._id;
+      customerName = customer.name || '';
       if (!req.body.orderItems || !Array.isArray(req.body.orderItems)) {
         return res.status(400).json({ message: 'Order items are required and must be an array' });
       }
@@ -85,10 +88,10 @@ export const createOrder = async (req, res) => {
       return res.status(400).json({ message: 'Invalid customerId' });
     }
     // Khi tạo đơn hàng, chỉ cần tìm user theo _id, không cần check role
-    const user = await User.findById(customerId);
-    if (!user) {
-      return res.status(404).json({ message: 'Customer (user) not found' });
-    }
+    // const user = await Customer.findById(customerId);
+    // if (!user) {
+    //   return res.status(404).json({ message: 'Customer (user) not found' });
+    // }
 
     // Validate order items
     if (orderItems.length === 0) {
@@ -99,8 +102,7 @@ export const createOrder = async (req, res) => {
     let totalAmount = 0;
     let returnableOut = 0;
     let returnableIn = 0;  // thêm biến này
-    // Tìm customer theo userId
-    const customer = await Customer.findOne({ userId: customerId });
+    
     // Validate products and calculate totals
     for (const item of orderItems) {
       if (!item.productId || !item.quantity) {
@@ -133,12 +135,15 @@ export const createOrder = async (req, res) => {
          returnableIn += item.returnable_quantity || 0;
       }
     }
-    const BOTTLE_RETURN_PRICE = 20000;
-    totalAmount = totalAmount - (returnableIn * BOTTLE_RETURN_PRICE);
+    // const BOTTLE_RETURN_PRICE = 20000;
+    // totalAmount = totalAmount - (returnableIn * BOTTLE_RETURN_PRICE);
 
     if(customer && customer.type === 'agency') {
       totalAmount = totalAmount * 0.9; // Giảm giá 10% cho khách hàng là đại lý
     }
+    
+    const returnablePrice = (returnableOut * 20000);
+    totalAmount -= returnablePrice; // Trừ tiền vỏ chai vào tổng tiền của đơn hàng
 
     // Create order
     const order = await Order.create({
@@ -171,7 +176,7 @@ export const createOrder = async (req, res) => {
     // Không cập nhật user.debt, user.empty_debt nữa
     
     if (customer) {
-    customer.debt = (customer.debt || 0) + (order.debtRemaining || 0);
+    customer.debt += order.debtRemaining + returnablePrice;
     customer.empty_debt = (customer.empty_debt || 0) + ((order.returnableOut || 0) - (order.returnableIn || 0));
     await customer.save();
     }
@@ -219,17 +224,23 @@ export const updateReturnable = async (req, res) => {
         return res.status(400).json({ message: 'Returned quantity exceeds returnable quantity' });
       }
 
-      const customer = await Customer.findOne({ userId: order.customerId });
+      const customer = await Customer.findOne({ _id: order.customerId });
+      console.log('Customer:', customer);
       if (!customer) {
         return res.status(404).json({ message: 'Customer (user) not found' });
       }
+      const returnablePrice = (returnedQuantity * 20000);
 
       // Update order returnable count
       order.returnableIn = newReturnableIn;
+      // update tăng tiền thanh toán đơn hàng nếu công nợ nhiều hơn tiền vỏ, nếu ít hơn gán bằng tổng tiền (đã thanh toán hết)
       await order.save();
 
+     
       // Update user empty debt
       customer.empty_debt -= returnedQuantity;
+      customer.debt -= returnablePrice;
+      
       await customer.save();
 
       res.json(order);
@@ -250,7 +261,7 @@ export const updatePayment = async (req, res) => {
     const order = await Order.findById(req.params.id);
 
     if (order) {
-      const customer = await Customer.findOne({ userId: order.customerId });
+      const customer = await Customer.findOne({ _id: order.customerId });
       if (!customer) {
         return res.status(404).json({ message: 'Customer (user) not found' });
       }
@@ -283,10 +294,11 @@ export const deleteOrder = async (req, res) => {
       return res.status(404).json({ message: 'Order not found' });
     }
 
-    const customer = await Customer.findOne({ userId: order.customerId });
+    const customer = await Customer.findOne({ _id: order.customerId });
     if (customer) {
-      customer.debt = (customer.debt || 0) - (order.debtRemaining || 0);
-      customer.empty_debt = (customer.empty_debt || 0) - ((order.returnableOut || 0) - (order.returnableIn || 0));
+      const returnableLeft = ((order.returnableOut || 0) - (order.returnableIn || 0));
+      customer.debt -= (order.debtRemaining + returnableLeft * 20000);
+      customer.empty_debt -= returnableLeft;
       await customer.save();
     }
 
