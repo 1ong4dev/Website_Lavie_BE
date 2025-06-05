@@ -4,6 +4,8 @@ import User from '../models/User.js';
 import Product from '../models/Product.js';
 import mongoose from 'mongoose';
 
+import Customer from '../models/Customer.js';
+
 // @desc    Get all orders
 // @route   GET /api/orders
 // @access  Private
@@ -162,6 +164,12 @@ export const createOrder = async (req, res) => {
     }
 
     // Không cập nhật user.debt, user.empty_debt nữa
+    const customer = await Customer.findOne({ userId: customerId });
+    if (customer) {
+    customer.debt = (customer.debt || 0) + (order.debtRemaining || 0);
+    customer.empty_debt = (customer.empty_debt || 0) + ((order.returnableOut || 0) - (order.returnableIn || 0));
+    await customer.save();
+    }
 
     res.status(201).json(order);
   } catch (error) {
@@ -206,8 +214,8 @@ export const updateReturnable = async (req, res) => {
         return res.status(400).json({ message: 'Returned quantity exceeds returnable quantity' });
       }
 
-      const user = await User.findOne({ _id: order.customerId, role: 'customer' });
-      if (!user) {
+      const customer = await Customer.findOne({ userId: order.customerId });
+      if (!customer) {
         return res.status(404).json({ message: 'Customer (user) not found' });
       }
 
@@ -216,8 +224,8 @@ export const updateReturnable = async (req, res) => {
       await order.save();
 
       // Update user empty debt
-      user.empty_debt -= returnedQuantity;
-      await user.save();
+      customer.empty_debt -= returnedQuantity;
+      await customer.save();
 
       res.json(order);
     } else {
@@ -237,8 +245,8 @@ export const updatePayment = async (req, res) => {
     const order = await Order.findById(req.params.id);
 
     if (order) {
-      const user = await User.findOne({ _id: order.customerId, role: 'customer' });
-      if (!user) {
+      const customer = await Customer.findOne({ userId: order.customerId });
+      if (!customer) {
         return res.status(404).json({ message: 'Customer (user) not found' });
       }
 
@@ -246,9 +254,9 @@ export const updatePayment = async (req, res) => {
       order.paidAmount += amount;
       await order.save();
 
-      // Update user debt
-      user.debt -= amount;
-      await user.save();
+      // Update customer debt
+      customer.debt -= amount;
+      await customer.save();
 
       res.json(order);
     } else {
@@ -268,6 +276,13 @@ export const deleteOrder = async (req, res) => {
 
     if (!order) {
       return res.status(404).json({ message: 'Order not found' });
+    }
+
+    const customer = await Customer.findOne({ userId: order.customerId });
+    if (customer) {
+      customer.debt = (customer.debt || 0) - (order.debtRemaining || 0);
+      customer.empty_debt = (customer.empty_debt || 0) - ((order.returnableOut || 0) - (order.returnableIn || 0));
+      await customer.save();
     }
 
     // Xóa tất cả OrderItem liên quan
