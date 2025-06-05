@@ -99,7 +99,8 @@ export const createOrder = async (req, res) => {
     let totalAmount = 0;
     let returnableOut = 0;
     let returnableIn = 0;  // thêm biến này
-
+    // Tìm customer theo userId
+    const customer = await Customer.findOne({ userId: customerId });
     // Validate products and calculate totals
     for (const item of orderItems) {
       if (!item.productId || !item.quantity) {
@@ -135,6 +136,10 @@ export const createOrder = async (req, res) => {
     const BOTTLE_RETURN_PRICE = 20000;
     totalAmount = totalAmount - (returnableIn * BOTTLE_RETURN_PRICE);
 
+    if(customer && customer.type === 'agency') {
+      totalAmount = totalAmount * 0.9; // Giảm giá 10% cho khách hàng là đại lý
+    }
+
     // Create order
     const order = await Order.create({
       customerId,
@@ -164,7 +169,7 @@ export const createOrder = async (req, res) => {
     }
 
     // Không cập nhật user.debt, user.empty_debt nữa
-    const customer = await Customer.findOne({ userId: customerId });
+    
     if (customer) {
     customer.debt = (customer.debt || 0) + (order.debtRemaining || 0);
     customer.empty_debt = (customer.empty_debt || 0) + ((order.returnableOut || 0) - (order.returnableIn || 0));
