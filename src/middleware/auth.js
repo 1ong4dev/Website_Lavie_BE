@@ -2,6 +2,8 @@ import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 import dotenv from 'dotenv';
 
+import Customer from '../models/Customer.js';
+
 dotenv.config();
 export const protect = async (req, res, next) => {
   let token;
@@ -42,9 +44,24 @@ export const admin = (req, res, next) => {
 };
 
 export const sales = (req, res, next) => {
-  if (req.user && (req.user.role === 'sales' || req.user.role === 'admin')) {
+  if (req.user && (req.user.role === 'sales' || req.user.role === 'admin' )) {
     next();
   } else {
+    res.status(401).json({ message: 'Not authorized as sales' });
+  }
+};
+// only put this in put customer route
+export const updateCustomerMiddleware = async (req, res, next) => {
+  if (req.user && (req.user.role === 'sales' || req.user.role === 'admin' )) {
+    next();
+  } 
+  else if( req.user && req.user.role === 'customer') {
+    const customer = await Customer.findOne({userId: req.user._id});
+    if(req.params.id === customer._id.toString()) {
+    next();
+    }
+  }
+  else {
     res.status(401).json({ message: 'Not authorized as sales' });
   }
 };

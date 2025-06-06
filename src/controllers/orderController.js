@@ -72,14 +72,19 @@ export const createOrder = async (req, res) => {
       orderItems = req.body.orderItems;
     } else if (req.body.customerId) {
       // Admin dashboard format
+<<<<<<< Updated upstream
       customer = await Customer.findOne({ _id: req.body.customerId });
      
+=======
+      customer = await Customer.findOne({ userId: req.body.customerId });
+      console.log('Customer found:', customer);
+>>>>>>> Stashed changes
       if (!req.body.orderItems || !Array.isArray(req.body.orderItems)) {
         return res.status(400).json({ message: 'Order items are required and must be an array' });
       }
       customerId = customer._id;
       orderItems = req.body.orderItems;
-      customerName = req.body.customerName || '';
+      customerName = customer.name || '';
     } else {
       return res.status(400).json({ message: 'Invalid order data format' });
     }
