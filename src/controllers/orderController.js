@@ -72,10 +72,12 @@ export const createOrder = async (req, res) => {
       orderItems = req.body.orderItems;
     } else if (req.body.customerId) {
       // Admin dashboard format
+      customer = await Customer.findOne({ _id: req.body.customerId });
+     
       if (!req.body.orderItems || !Array.isArray(req.body.orderItems)) {
         return res.status(400).json({ message: 'Order items are required and must be an array' });
       }
-      customerId = req.body.customerId;
+      customerId = customer._id;
       orderItems = req.body.orderItems;
       customerName = req.body.customerName || '';
     } else {
