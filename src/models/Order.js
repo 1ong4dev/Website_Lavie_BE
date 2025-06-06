@@ -31,6 +31,15 @@ const orderSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  returnableAmount: { // Tổng tiền cọc vỏ
+    type: Number,
+    default: 0,
+  },
+  // có thể thêm tiền vỏ đã trả nhưng không cần thiết
+  debtRemainingReturnable: { // Số tiền cọc vỏ còn nợ
+    type: Number,
+    default: 0,
+  },
   returnableOut: {
     type: Number,
     default: 0,
@@ -51,6 +60,7 @@ const orderSchema = new mongoose.Schema({
 // Calculate debtRemaining before saving
 orderSchema.pre('save', function(next) {
   this.debtRemaining = this.totalAmount - this.paidAmount;
+  this.debtRemainingReturnable = this.returnableAmount - (this.returnableIn *20000);
   next();
 });
 

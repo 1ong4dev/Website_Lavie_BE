@@ -143,7 +143,7 @@ export const createOrder = async (req, res) => {
     }
     
     const returnablePrice = (returnableOut * 20000);
-    totalAmount -= returnablePrice; // Trừ tiền vỏ chai vào tổng tiền của đơn hàng
+    totalAmount -= returnablePrice; // Trừ tiền cọc vỏ chai vào tổng tiền của đơn hàng
 
     // Create order
     const order = await Order.create({
@@ -151,6 +151,7 @@ export const createOrder = async (req, res) => {
       customerName,
       totalAmount,
       returnableOut,
+      returnableAmount: returnablePrice, // Tổng tiền cọc vỏ
       returnableIn,   // thêm trường này
       status: 'pending',
       paidAmount: 0,
@@ -297,7 +298,7 @@ export const deleteOrder = async (req, res) => {
     const customer = await Customer.findOne({ _id: order.customerId });
     if (customer) {
       const returnableLeft = ((order.returnableOut || 0) - (order.returnableIn || 0));
-      customer.debt -= (order.debtRemaining + returnableLeft * 20000);
+      customer.debt -= (order.debtRemaining + order.debtRemainingReturnable);
       customer.empty_debt -= returnableLeft;
       await customer.save();
     }
