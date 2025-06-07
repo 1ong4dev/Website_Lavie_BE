@@ -237,6 +237,7 @@ export const updateReturnable = async (req, res) => {
       order.returnableIn = newReturnableIn;
       // update tiền cọc vỏ đã trả theo lượng vỏ cập nhật (mặc định khi khách trả vỏ thì bên cty sẽ trả luôn tiền cọc)
       order.paidReturnableAmount -= returnablePrice;
+      order.returnableAmount -= returnablePrice;
       if (order.paidReturnableAmount < 0)
       order.paidReturnableAmount = 0;
       await order.save();
