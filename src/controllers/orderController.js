@@ -72,13 +72,8 @@ export const createOrder = async (req, res) => {
       orderItems = req.body.orderItems;
     } else if (req.body.customerId) {
       // Admin dashboard format
-<<<<<<< Updated upstream
       customer = await Customer.findOne({ _id: req.body.customerId });
      
-=======
-      customer = await Customer.findOne({ userId: req.body.customerId });
-      console.log('Customer found:', customer);
->>>>>>> Stashed changes
       if (!req.body.orderItems || !Array.isArray(req.body.orderItems)) {
         return res.status(400).json({ message: 'Order items are required and must be an array' });
       }
@@ -184,7 +179,7 @@ export const createOrder = async (req, res) => {
     // Không cập nhật user.debt, user.empty_debt nữa
     
     if (customer) {
-    customer.debt += order.debtRemaining + returnablePrice;
+    customer.debt += order.debtRemaining;
     customer.empty_debt = (customer.empty_debt || 0) + ((order.returnableOut || 0) - (order.returnableIn || 0));
     await customer.save();
     }
@@ -233,7 +228,6 @@ export const updateReturnable = async (req, res) => {
       }
 
       const customer = await Customer.findOne({ _id: order.customerId });
-      console.log('Customer:', customer);
       if (!customer) {
         return res.status(404).json({ message: 'Customer (user) not found' });
       }
@@ -241,13 +235,16 @@ export const updateReturnable = async (req, res) => {
 
       // Update order returnable count
       order.returnableIn = newReturnableIn;
-      // update tăng tiền thanh toán đơn hàng nếu công nợ nhiều hơn tiền vỏ, nếu ít hơn gán bằng tổng tiền (đã thanh toán hết)
+      // update tiền cọc vỏ đã trả theo lượng vỏ cập nhật (mặc định khi khách trả vỏ thì bên cty sẽ trả luôn tiền cọc)
+      order.paidReturnableAmount -= returnablePrice;
+      if (order.paidReturnableAmount < 0)
+      order.paidReturnableAmount = 0;
       await order.save();
-
      
       // Update user empty debt
       customer.empty_debt -= returnedQuantity;
-      customer.debt -= returnablePrice;
+      // ở đây cộng thêm nợ của khách vì mặc định công ty đã trả tiền cọc thay cho vỏ
+      customer.debt += returnablePrice;
       
       await customer.save();
 
@@ -265,7 +262,8 @@ export const updateReturnable = async (req, res) => {
 // @access  Private
 export const updatePayment = async (req, res) => {
   try {
-    const { amount } = req.body;
+    const { amount , amountReturnable} = req.body;
+    console.log(amount, ' and ', amountReturnable);
     const order = await Order.findById(req.params.id);
 
     if (order) {
@@ -276,10 +274,12 @@ export const updatePayment = async (req, res) => {
 
       // Update order payment
       order.paidAmount += amount;
+      order.paidReturnableAmount += amountReturnable;
       await order.save();
 
       // Update customer debt
       customer.debt -= amount;
+      customer.debt -= amountReturnable;
       await customer.save();
 
       res.json(order);
